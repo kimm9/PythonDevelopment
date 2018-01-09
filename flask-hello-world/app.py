@@ -10,13 +10,37 @@ app = Flask(__name__)
 
 # user the decorator pattern to 
 # link the view function to a url
-@app.route("/")
-@app.route("/hello")
+
+# Debug Mode/Error Handling
+app.config["DEBUG"] = True
 
 # define the view using a function, which returns a string 
 
+@app.route("/")
+@app.route("/hello")
+
+
+
 def hello_world(): 
-	return "YO WHAT IS GOOD, WORLD!"
+  return "Hi World, It's a me a mario"
+
+
+
+# return search query on this route 
+@app.route("/test/<search_query>")
+
+def search(search_query):
+  return search_query
+
+@app.route("/name/<name>")
+
+def index(name):
+
+  if name.lower() == "matthew":
+    return "Hello, {}".format(name)
+  else:
+    return "Not Found", 404
+
 
 # start the development server using the run() method
 
