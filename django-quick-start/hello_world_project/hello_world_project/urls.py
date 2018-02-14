@@ -14,12 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import include, url
+from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from myweblab import settings
+
+admin.autodiscover()
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^', include('hello_world.urls')),
+    url(r'^', include('hello_world.urls')) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
     url(r'^about/', include('hello_world.urls')),
     url(r'^hello2/', include('hello_world.urls')),
 
 ]
+
+urlpatterns += staticfiles_urlpatterns()
