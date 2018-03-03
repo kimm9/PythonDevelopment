@@ -3,8 +3,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.shortcuts import render
 
-import requests
+import requests, pprint
 # Create your views here.
+pp = pprint.PrettyPrinter(indent=4)
 
 def index(request):
     return render(
@@ -42,3 +43,11 @@ def signup(request):
 def api(request):
     r = requests.get('https://api-public.sandbox.gdax.com/currencies')
     currencies = r.json()
+    pp.pprint(currencies)
+    return render(request, 'api.html', {
+
+        })
+
+
+#     for k,v in coins[0].items():
+# ...   mylist.append(v)
