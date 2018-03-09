@@ -7,4 +7,5 @@ def index(request):
   return render(request, 'coin/index.html', context=context_dict)
 
 def about(request):
-  return HttpResponse("About coInfo! <br> <a href='/'> Main Page </a>")
+  context_dict = {'boldmessage': "this is about coin message from the developer"}
+  return render(request, 'coin/about.html', context=context_dict)
