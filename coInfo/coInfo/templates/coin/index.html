@@ -9,8 +9,15 @@
 <body>
   <h1>Hey</h1>
   <div>
-    Hey there <br />
-    <strong>{{boldmessage}}</strong><br />
+    {% if categories %}
+    <ul>
+      {% for category in categories %}
+      <li> {{category.name}}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+      <strong>There are no Categories Present.</strong>
+    {% endif %}
   </div>
   <div>
     <a href="/coin/about/">About </a> <br />

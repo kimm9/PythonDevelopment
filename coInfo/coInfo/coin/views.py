@@ -6,7 +6,11 @@ from coin.models import Category
 def index(request):
   # Get the Database for a list of All categories
   #order the Categories in descending order by likes 
-  context_dict = {'boldmessage': "this is coin message"}
+  # get top 5 only or all is less than 5
+  # put the list in context_dict
+
+  category_list = Category.objects.order_by('-likes')[:5]
+  context_dict = {'categories': category_list}
   return render(request, 'coin/index.html', context=context_dict)
 
 def about(request):
