@@ -12,35 +12,44 @@ def populate():
 
   cryptocurrency_pages = [ 
   {"title": "Coindesk", 
-  "url":"https://www.coindesk.com/"
+  "url":"https://www.coindesk.com/",
+  "views": 100
   },
   {"title": "CCN", 
-  "url":"https://www.ccn.com/"
+  "url":"https://www.ccn.com/",
+  "views": 200
   },
   {"title": "The Merkle", 
-  "url":"http://themerkle.com/"
+  "url":"http://themerkle.com/",
+  "views": 300
   }
   ]
   ethereum_pages = [ 
   {"title": "Ethnews", 
-  "url":"https://www.ethnews.com/"
+  "url":"https://www.ethnews.com/",
+  "views": 130
   },
   {"title": "Ethereum on Cointelegraph", 
-  "url":"https://cointelegraph.com/tags/ethereum"
+  "url":"https://cointelegraph.com/tags/ethereum",
+  "views": 230
   },
   {"title": "Ethereum on CCN", 
-  "url":"https://www.ccn.com/tag/ethereum/"
+  "url":"https://www.ccn.com/tag/ethereum/",
+  "views": 99
   }
   ]
   bitcoin_pages = [ 
   {"title": "Newsbtc", 
-  "url":"http://www.newsbtc.com/"
+  "url":"http://www.newsbtc.com/",
+  "views": 120
   },
   {"title": "Bitcoinwarrior", 
-  "url":"https://bitcoinwarrior.net/"
+  "url":"https://bitcoinwarrior.net/",
+  "views": 140
   },
   {"title": "Coindesk", 
-  "url":"https://www.coindesk.com/"
+  "url":"https://www.coindesk.com/",
+  "views": 280
   }
   ]
 
@@ -61,14 +70,14 @@ def populate():
   for cat, cat_data in cats.items():
     c = add_cat(cat, cat_data)
     for p in cat_data["pages"]:
-      add_page(c, p["title"], p["url"])
+      add_page(c, p["title"], p["url"], p["views"])
 
   for c in Category.objects.all():
     for p in Page.objects.filter(category=c):
       print("- {0} - {1}".format(str(c), str(p)))
 
 def add_page(cat, title, url, views=0):
-  p = Page.objects.get_or_create(category=cat, title=title)[0]
+  p = Page.objects.get_or_create(category=cat, title=title, views=views)[0]
   p.url=url
   p.views=views
   p.save()

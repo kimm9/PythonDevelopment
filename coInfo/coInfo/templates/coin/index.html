@@ -12,7 +12,8 @@
     {% if categories %}
     <ul>
       {% for category in categories %}
-      <li> {{category.name}}</li>
+      <li><a href="/coin/category/{{ category.slug }}">{{category.name}}</a>
+      </li>
       {% endfor %}
     </ul>
     {% else %}
@@ -20,7 +21,21 @@
     {% endif %}
   </div>
   <div>
-    <a href="/coin/about/">About </a> <br />
+    <h1>top pages</h1>
+    {% if pages %}
+    <ul>
+      {% for page in pages %}
+      <li><a href="{{ page.url }}">{{page.title}}</a> - {{ page.category}} ({{page.views}} view(s))
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+      <strong>There are no top pages Present.</strong>
+    {% endif %}
+  </div>
+  <div>
+    <a href="/coin/about/">About </a> <br/>
+    <a href="/coin/add_category">Add a Category</a> <br/>
     <img src="{% static "images/hoy.png" %}">
   </div>
 </html>

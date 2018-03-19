@@ -1,16 +1,21 @@
 from django.shortcuts import render
+from coin.forms import CategoryForm
 from django.http import HttpResponse
 from coin.models import Category, Page
 
 # Create your views here.
 def index(request):
   # Get the Database for a list of All categories
-  #order the Categories in descending order by likes 
+  # order the Categories in descending order by likes 
   # get top 5 only or all is less than 5
   # put the list in context_dict
 
   category_list = Category.objects.order_by('-likes')[:5]
-  context_dict = {'categories': category_list}
+  page_list = Page.objects.order_by('-views')[:5]
+  context_dict = {
+  'categories': category_list,
+  'pages': page_list
+  }
   return render(request, 'coin/index.html', context=context_dict)
 
 def about(request):
@@ -41,5 +46,19 @@ def show_category(request, category_name_slug):
   #render response
   return render(request, 'coin/category.html', context_dict)
 
+def add_category(request):
+  form = CategoryForm()
+
+  if request.method == 'POST':
+    form = CategoryForm(request.POST)
+    #is it valid?
+    if form.is_valid():
+      #save the new cat to db
+      form.save(commit=True)
+      return index(request)
+    else:
+      #supplied form contained errors 
+      print(form.errors)
+  return render(request, 'coin/add_category.html', {'form': form})
 
 
