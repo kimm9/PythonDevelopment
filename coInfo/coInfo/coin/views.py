@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from coin.forms import CategoryForm
+from coin.forms import CategoryForm, PageForm
 from django.http import HttpResponse
 from coin.models import Category, Page
 
@@ -34,6 +34,7 @@ def show_category(request, category_name_slug):
     #retrieve all of the associated pages
     #note that filter function will return a list of page objects or an empty list
     pages = Page.objects.filter(category=category)
+    print(pages)
     #adds our results list to the template context under name pages
     context_dict['pages'] = pages
     #add category object from the database to the context dictionary
@@ -54,11 +55,34 @@ def add_category(request):
     #is it valid?
     if form.is_valid():
       #save the new cat to db
-      form.save(commit=True)
+      cat = form.save(commit=True)
+      print(cat, cat.slug)
       return index(request)
     else:
       #supplied form contained errors 
       print(form.errors)
   return render(request, 'coin/add_category.html', {'form': form})
 
+def add_page(request, category_name_slug):
+  try:
+      category = Category.objects.get(slug=category_name_slug)
+  except Category.DoesNotExist:
+    category = None
+
+  form = PageForm()
+  if request.method == 'POST':
+    form = PageForm(request.POST)
+    if form.is_valid():
+      if category:
+        page = form.save(commit=False)
+        page.category = category
+        page.views = 0 
+        page.save()
+        print('this is page form', page)
+        return show_category(request, category_name_slug)
+    else:
+      print(form.errors)
+
+  context_dict = {'form': form, 'category': category}
+  return render(request, 'coin/add_page.html', context_dict)
 

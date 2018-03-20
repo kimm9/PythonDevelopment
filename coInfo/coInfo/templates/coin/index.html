@@ -1,18 +1,18 @@
-<!DOCTYPE html>
+{% extends 'coin/base.html' %}
 {% load staticfiles %}
-<html>
-<head>
-  <title>coINFO</title>
-  <link rel="stylesheet" href="{% static "css/main.css" %}" />
-  <script src="{% static "js/main.js" %}"></script>
-</head>
-<body>
+
+{% block title_block %}
+    {{category.name}}
+{% endblock %}
+
+{% block body_block %}
+
   <h1>Hey</h1>
   <div>
     {% if categories %}
     <ul>
       {% for category in categories %}
-      <li><a href="/coin/category/{{ category.slug }}">{{category.name}}</a>
+      <li><a href="{% url 'show_category' category.slug %}">{{category.name}}</a>
       </li>
       {% endfor %}
     </ul>
@@ -33,10 +33,10 @@
       <strong>There are no top pages Present.</strong>
     {% endif %}
   </div>
-  <div>
-    <a href="/coin/about/">About </a> <br/>
-    <a href="/coin/add_category">Add a Category</a> <br/>
+<!--   <div>
+    <a href="{% url 'about' %}">About </a> <br/>
+    <a href="/coin/add_category/">Add a Category</a> <br/>
     <img src="{% static "images/hoy.png" %}">
   </div>
-</html>
-</body>
+ -->
+{% endblock %}

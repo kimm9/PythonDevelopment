@@ -1,25 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>CoInfo</title>
-</head>
-<body>
+{% extends 'coin/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    {{category.name}}
+{% endblock %}
+
+{% block body_block %}
+
+<h1>{{ category.name }}</h1>
+    <div>
+        {% if category %}
+            {% if pages %}
+            <ul>
+                {% for page in pages %}
+                <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <strong>No pages currently in category.</strong>
+            {% endif %}
+        {% else %}
+            The specified category does not exist!
+        {% endif %}
+  </div>
   <div>
     {% if category %}
-      <h1>{{category.name}}</h1>
-      {% if pages %}
-        <ul>
-          {% for page in pages %}
-            <li><a href="{{ page.url }}">{{ page.title }}</a></li>
-          {% endfor %}
-        </ul>
-      {% else %}
-          <strong>No Pages for this Category</strong>
-      {% endif %}
-    {% else %}
-      The category does not exist!
+      <a href="{% url 'add_page' category.slug  %}">Add Page</a> <br/>
     {% endif %}
-    <a href="/coin/">Home</a>
+    
   </div>
-</body>
-</html>
+{% endblock %}
+

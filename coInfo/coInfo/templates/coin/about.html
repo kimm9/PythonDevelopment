@@ -1,11 +1,13 @@
-<!DOCTYPE html>
+{% extends 'coin/base.html' %}
 {% load staticfiles %}
-<html>
-<head>
-  <title>coINFO</title>
-  <link rel="stylesheet" href="{% static "css/main.css" %}" />
-  <script src="{% static "js/main.js" %}"></script>
-</head>
+
+
+{% block title_block %}
+    {{category.name}}
+{% endblock %}
+
+{% block body_block %}
+
 <body>
   <h1>Hey</h1>
   <div>
@@ -13,8 +15,7 @@
     <strong>{{boldmessage}}</strong><br />
   </div>
   <div>
-    <a href="/coin/"> Home </a> <br />
     <img src="{{MEDIA_URL}}deer.jpg">
   </div>
-</html>
-</body>
+
+{% endblock %}

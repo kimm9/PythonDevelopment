@@ -67,7 +67,7 @@ def populate():
   # http://docs.quantifiedcode.com/python-anti-patterns/readability/
   # for more information about how to iterate over a dictionary properly.
 
-  for cat, cat_data in cats.items():
+  for cat, cat_data in cats.items():ㅈ
     c = add_cat(cat, cat_data)
     for p in cat_data["pages"]:
       add_page(c, p["title"], p["url"], p["views"])
