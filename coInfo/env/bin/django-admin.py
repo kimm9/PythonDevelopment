@@ -1,5 +1,4 @@
 #!/Users/Matthew/Documents/PythonDevelopment/coInfo/env/bin/python3
-from django.core import management
-
-if __name__ == "__main__":
-    management.execute_from_command_line()
+# EASY-INSTALL-SCRIPT: 'Django==1.11.11','django-admin.py'
+__requires__ = 'Django==1.11.11'
+__import__('pkg_resources').run_script('Django==1.11.11', 'django-admin.py')

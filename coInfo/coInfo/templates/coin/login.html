@@ -1,0 +1,22 @@
+{% extends 'coin/base.html' %}
+{% load staticfiles %}
+
+
+{% block title_block %}
+    {{category.name}}
+{% endblock %}
+
+{% block body_block %}
+
+<h1>Login to CoInfo</h1>
+<form id="login_form" method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+  USERNAME: <input type="text" name="username" value="" size="60" />
+  <br>
+  PASSWORD: <input type="password" name="password" value="" size="60" />
+  <br>
+
+  <input type="submit" value="submit" name="">
+</form>
+
+{% endblock %}

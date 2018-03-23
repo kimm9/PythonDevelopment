@@ -1,5 +1,5 @@
 from django.contrib import admin
-from coin.models import Category, Page, Coin, Portfolio
+from coin.models import Category, Page, Coin, Portfolio, UserProfile
 
 #Customize admin Model Forms
 class PageAdmin(admin.ModelAdmin):
@@ -14,3 +14,4 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(Page, PageAdmin)
 admin.site.register(Coin)
 admin.site.register(Portfolio)
+admin.site.register(UserProfile)

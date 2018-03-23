@@ -7,8 +7,14 @@
 
 {% block body_block %}
 
-  <h1>Hey</h1>
+  {% if user.is_authenticated %}
+    <h3>Hey! {{ user.username }}</h3> 
+  {% else %}
+    hey there partner!
+  {% endif %}
+
   <div>
+    <p>visits: {{ visits }}</p>
     {% if categories %}
     <ul>
       {% for category in categories %}
