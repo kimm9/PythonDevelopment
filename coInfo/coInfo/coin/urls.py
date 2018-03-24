@@ -15,3 +15,5 @@ urlpatterns = [
   path('restricted/', views.restricted, name='restricted'),
   ]
 
+
+

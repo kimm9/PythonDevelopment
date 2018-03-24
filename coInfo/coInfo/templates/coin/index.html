@@ -7,6 +7,9 @@
 
 {% block body_block %}
 
+<div class="container">
+  
+  
   {% if user.is_authenticated %}
     <h3>Hey! {{ user.username }}</h3> 
   {% else %}
@@ -45,4 +48,5 @@
     <img src="{% static "images/hoy.png" %}">
   </div>
  -->
+</div>
 {% endblock %}

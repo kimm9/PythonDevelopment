@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'registration',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -116,9 +117,13 @@ ACCOUNT_ACTIVATION_DAYS = 7
 
 REGISTRATION_AUTO_LOGIN = True
 
+
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+
 LOGIN_REDIRECT_URL = '/coin/'
 
-LOGIN_URL = '/accounts/login/'
+LOGIN_URL = '/coin/login/'
+
 
 
 # Internationalization

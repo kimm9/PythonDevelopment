@@ -2,18 +2,19 @@
 {% load staticfiles %}
 
 {% block body_block %}
-
-<h1>LOGIN</h1>
-<form method="post" action=".">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Log in" name="" />
-  <input type="hidden" name="next" value="{{ next }}" />
-  <p>
-    Not a Member?
-    <a href="{% url 'registration_register' %}">Register</a>
-  </p>
-  
-</form>
+<div class="container">
+  <h1>LOGIN</h1>
+  <form method="post" action=".">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Log in" name="" />
+    <input type="hidden" name="next" value="{{ next }}" />
+    <p>
+      Not a Member?
+      <a href="{% url 'registration_register' %}">Register</a>
+    </p>
+    
+  </form>
+</div>
 
 {% endblock %}

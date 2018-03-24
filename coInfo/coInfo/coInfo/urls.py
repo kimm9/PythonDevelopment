@@ -20,10 +20,18 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 from coin import views
 from django.conf import settings
+# from registration.backends.default.views import RegistrationView
+
+#create a class that redirects user to the index
+#when logged
+# class MyRegistrationView(RegistrationView):
+#     def get_success_url(self, user):
+#         return '/coin/'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('coin/', include('coin.urls')),
-    # path('accounts/', include('registration.urls')),
+    # path('accounts/register/', MyRegistrationView(), name='registration_register'),
+    path('accounts/', include('registration.backends.default.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
