@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from coin.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.http import HttpResponse, HttpResponseRedirect
-from coin.models import Category, Page
+from coin.models import Category, Page, UserProfile
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from coin.webhose_search import run_query
@@ -62,6 +63,16 @@ def show_category(request, category_name_slug):
     #do nothing
     context_dict['category'] = None
     context_dict['pages'] = None
+
+  context_dict['query'] = category.name
+  result_list = []
+  if request.method == 'POST':
+    query = request.POST['query'].strip()
+
+    if query:
+      result_list = run_query(query)
+      context_dict['query'] = query
+      context_dict['result_list'] = result_list
   #render response
   return render(request, 'coin/category.html', context_dict)
 
@@ -227,4 +238,57 @@ def track_url(request):
       except:
         pass
   return redirect(url)
+
+@login_required
+def register_profile(request):
+  form = UserProfileForm()
+
+  if request.method == 'POST':
+    form = UserProfileForm(request.POST, request.FILES)
+    if form.is_valid():
+      user_profile = form.save(commit=False)
+      user_profile.user = request.user
+      user_profile.save()
+
+      return redirect('index')
+    else:
+      print(form.errors)
+
+  context_dict = {'form': form}
+
+  return render(request, 'coin/profile_registration.html', context_dict)
+
+@login_required
+def profile(request, username):
+  try:
+    user = User.objects.get(username=username)
+  except User.DoesNotExist:
+    return redirect('index')
+
+  userprofile = UserProfile.objects.get_or_create(user=user)[0]
+  form = UserProfileForm({'website': userprofile.website, 'picture': userprofile.picture})
+
+  if request.method == 'POST':
+    form = UserProfileForm(request.POST, request.FILES, instance=userprofile)
+    if form.is_valid():
+      form.save(commit=True)
+      return redirect('profile', user.username)
+    else:
+      print(form.errors)
+  return render(request, 'coin/profile.html', {'userprofile': userprofile, 'selecteduser': user, 'form': form})
+
+@login_required
+def like_category(request):
+  cat_id = None
+  if request.method == 'GET':
+    cat_id = request.GET['category_id'] 
+    likes = 0
+    if cat_id:
+      cat = Category.objects.get(id=int(cat_id)) 
+      if cat:
+          likes = cat.likes + 1
+          cat.likes =  likes
+          cat.save()
+
+  return HttpResponse(likes)
 

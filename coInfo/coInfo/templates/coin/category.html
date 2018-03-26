@@ -11,6 +11,12 @@
 
 <h1>{{ category.name }}</h1>
     <div>
+        <strong id="like_count">{{ category.likes }}</strong> people like this category {% if user.is_authenticated %}
+        <button id="likes" data-catid="{{category.id}}" class="btn btn-primary btn-sm" type="button"> Like
+        </button> 
+        {% endif %}
+    </div>
+    <div>
         {% if category %}
             {% if pages %}
             <ul>
@@ -37,6 +43,38 @@
     {% endif %}
     
   </div>
+
+  <div class="container">
+
+  <h1>Search</h1>
+  <br/>
+  <form class="" id="user_form"
+  method="post" action="{% url 'show_category' category.slug %}"> {% csrf_token %}
+  <div class="input-field">
+  <input class="input-field" type="text" size="50" name="query" value="" id="query" />
+  </div>
+
+  <button class="waves-effect waves-light btn" type="submit" name="submit"
+  value="Search">Search</button>
+</form>
+<div>
+{% if result_list %}
+  <h3>Results</h3>
+  <!-- Display search results in an ordered list -->
+
+  {% for result in result_list %}
+  
+  <div class="collection">
+  <div class="">
+  <h4>
+  <a href="{{ result.link }}">{{ result.title }}</a> </h4>
+  <p class="list-group-item-text">{{ result.summary }}</p>
+  </div>
+    
+  </div>
+  {% endfor %}
+
+  {% endif %} 
 </div>
 {% endblock %}
 
