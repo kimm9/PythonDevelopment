@@ -1,0 +1,38 @@
+{% extends 'coin/base.html' %}
+{% load staticfiles %}
+{% block title %} Search {% endblock %}
+{% block body_block %}
+<div class="container">
+
+  <h1>Search with Rango</h1>
+  <br/>
+  <form class="" id="user_form"
+  method="post" action="{% url 'search' %}"> {% csrf_token %}
+  <div class="input-field">
+  <input class="input-field" type="text" size="50" name="query" value="" id="query" />
+  </div>
+
+  <button class="waves-effect waves-light btn" type="submit" name="submit"
+  value="Search">Search</button>
+</form>
+<div>
+{% if result_list %}
+  <h3>Results</h3>
+  <!-- Display search results in an ordered list -->
+
+  {% for result in result_list %}
+  
+  <div class="collection">
+  <div class="">
+  <h4>
+  <a href="{{ result.link }}">{{ result.title }}</a> </h4>
+  <p class="list-group-item-text">{{ result.summary }}</p>
+  </div>
+    
+  </div>
+  {% endfor %}
+
+  {% endif %} 
+
+</div>
+{% endblock %}

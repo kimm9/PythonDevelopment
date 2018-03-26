@@ -34,6 +34,7 @@
       <ul class="right hide-on-med-and-down">
       <li><a href="{% url 'about' %}">About</a></li>
       <li><a href="{% url 'index' %}">Index</a></li>
+      <li><a href="{% url 'search' %}">Search</a></li>
     {% if user.is_authenticated %}
       <li><a href="{% url 'restricted' %}">Restricted Page</a></li>
       <li><a href="{% url 'add_category' %}">Add New Category</a></li>

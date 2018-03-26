@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from coin.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.http import HttpResponse, HttpResponseRedirect
 from coin.models import Category, Page
@@ -6,6 +6,8 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from coin.webhose_search import run_query
+
 
 # Create your views here.
 def index(request):
@@ -49,7 +51,7 @@ def show_category(request, category_name_slug):
     category = Category.objects.get(slug=category_name_slug)
     #retrieve all of the associated pages
     #note that filter function will return a list of page objects or an empty list
-    pages = Page.objects.filter(category=category)
+    pages = Page.objects.filter(category=category).order_by('-views')
     print(pages)
     #adds our results list to the template context under name pages
     context_dict['pages'] = pages
@@ -200,4 +202,29 @@ def visitor_cookie_handler(request):
     request.session['last_visit'] = last_visit_cookie  
     #update/set the visits
   request.session['visits'] = visits
+
+def search(request):
+  result_list = []
+
+  if request.method == 'POST':
+    query = request.POST['query'].strip()
+    if query:
+      result_list = run_query(query)
+  return render(request, 'coin/search.html', {'result_list': result_list})
+
+def track_url(request):
+  page_id = None
+  url = '/coin/'
+  if request.method == 'GET':
+    if 'page_id' in request.GET:
+      page_id = request.GET['page_id']
+
+      try:
+        page = Page.objects.get(id=page_id)
+        page.views = page.views + 1
+        page.save()
+        url = page.url
+      except:
+        pass
+  return redirect(url)
 

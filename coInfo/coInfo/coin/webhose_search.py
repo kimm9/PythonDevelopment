@@ -1,6 +1,6 @@
 import json
 import urllib.parse
-import urlib.request
+import urllib.request
 
 def read_webhose_key():
   webhose_api_key = None
@@ -9,7 +9,7 @@ def read_webhose_key():
     with open('search.key', 'r') as f:
       webhose_api_key = f.readline().strip()
   except:
-    raise IOError('search.ket file not found')
+    raise IOError('search.key file not found')
 
   return webhose_api_key
 
@@ -44,3 +44,4 @@ def run_query(search_terms, size=10):
     print("error when querying the webhose api")
 
   return results
+
